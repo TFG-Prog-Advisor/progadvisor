@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+  <xs:element name="desc">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="short" type="xs:string" minOccurs="0"/>
+        <xs:element name="long" type="xs:string" minOccurs="0"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="app">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="appinfo" minOccurs="0" maxOccurs="unbounded">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="acronym" type="xs:string" minOccurs="0"/>
+              <xs:element name="title" type="xs:string" minOccurs="0"/>
+              <xs:element ref="desc" minOccurs="0" maxOccurs="unbounded"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="exec" minOccurs="0" maxOccurs="unbounded">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="result" minOccurs="0" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:attribute name="media" type="xs:string"/>
+                  <xs:attribute name="filename" type="xs:string"/>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="cmd" minOccurs="0" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:attribute name="id" type="xs:string"/>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="pprefix" minOccurs="0" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:attribute name="value" type="xs:string"/>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="entries" minOccurs="0" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:attribute name="scheme" type="xs:string"/>
+                  <xs:attribute name="pname" type="xs:string"/>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="files" minOccurs="0" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:attribute name="scheme" type="xs:string"/>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="execinfo" minOccurs="0" maxOccurs="unbounded">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="cmdlineapp" type="xs:string" minOccurs="0" msdata:Ordinal="0"/>
+            </xs:sequence>
+            <xs:attribute name="method" type="xs:string"/>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="parameters" minOccurs="0" maxOccurs="unbounded">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="selectone" minOccurs="0" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="default" nillable="true" minOccurs="0" maxOccurs="unbounded">
+                      <xs:complexType>
+                        <xs:simpleContent msdata:ColumnName="default_Text" msdata:Ordinal="1">
+                          <xs:extension base="xs:string">
+                            <xs:attribute name="value2" type="xs:string"/>
+                          </xs:extension>
+                        </xs:simpleContent>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element ref="desc" minOccurs="0" maxOccurs="unbounded"/>
+                    <xs:element name="option" minOccurs="0" maxOccurs="unbounded">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element ref="desc" minOccurs="0" maxOccurs="unbounded"/>
+                        </xs:sequence>
+                        <xs:attribute name="value" type="xs:string"/>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                  <xs:attribute name="widget" type="xs:string"/>
+                  <xs:attribute name="name" type="xs:string"/>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+            <xs:attribute name="prefix" type="xs:string"/>
+            <xs:attribute name="check" type="xs:string"/>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+      <xs:attribute name="visibility" type="xs:string"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:UseCurrentLocale="true">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element ref="desc"/>
+        <xs:element ref="app"/>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

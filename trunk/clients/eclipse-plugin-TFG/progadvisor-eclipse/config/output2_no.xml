@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<ei_response><ei_app_output>
+<eiout>
+<eicommands>
+<printonconsole outclass="warning">
+  <content format="text">"Method AImpl.f1 terminates?: UNKOWN"</content>
+</printonconsole>
+<printonconsole outclass="warning">
+  <content format="text">UB for 'AImpl.f1'(this) = 3+c(failed(no_rf,[scc=0,cr=entrywhile_0/2]))</content>
+</printonconsole>
+<addmarker outclass="warning">
+  <lines>
+    <line from="13"/>
+  </lines>
+  <content format="text">"Method AImpl.f1 terminates?: UNKOWN"</content>
+</addmarker>
+<addmarker outclass="warning">
+  <lines>
+    <line from="13"/>
+  </lines>
+  <content format="text">UB for 'AImpl.f1'(this) = 3+c(failed(no_rf,[scc=0,cr=entrywhile_0/2]))</content>
+</addmarker>
+</eicommands>
+<eiactions>
+</eiactions>
+</eiout></ei_app_output></ei_response>

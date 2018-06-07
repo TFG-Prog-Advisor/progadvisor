@@ -1,0 +1,492 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+   <extension point="org.eclipse.ui.commands">
+      <category
+            name="ProgAdvisor"
+            id="org.costa.progadvisor.commands.category">
+      </category>
+      <command
+            name="Analyze Method"
+            categoryId="org.costa.progadvisor.commands.category"
+            id="org.costa.progadvisor.commands.analyzeMethod">
+      </command>
+      <command
+            name="Clean Info"
+            categoryId="org.costa.progadvisor.commands.category"
+            id="org.costa.progadvisor.commands.cleanMarkers">
+      </command>
+   </extension>
+   <extension point="org.eclipse.ui.handlers">
+      <handler
+            commandId="org.costa.progadvisor.commands.analyzeMethod"
+            class="org.costa.progadvisor.handlers.CostabsHandler">
+      </handler>
+   </extension>
+   <extension
+         point="org.eclipse.ui.bindings">
+      <key
+            commandId="org.costa.progadvisor.commands.analyzeMethod"
+            contextId="org.eclipse.ui.contexts.window"
+            sequence="M1+6"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration">
+      </key>
+       <key
+            commandId="org.costa.progadvisor.commands.cleanMarkers"
+            contextId="org.eclipse.ui.contexts.window"
+            sequence="M1+9"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration">
+      </key>
+   </extension>
+<!--   <extension point="org.eclipse.ui.menus">
+		<menuContribution
+    		class="org.costa.progadvisor.menus.MarkerContributionFactory"
+	    	locationURI="popup:#AbstractTextEditorRulerContext?after=additions">
+	  		<dynamic
+	         	class="org.costa.progadvisor.menus.MarkerMenuContribution"
+	         	id="org.costa.progadvisor.menus.MarkerMenuContribution">
+	  		</dynamic>
+		</menuContribution>
+	</extension> -->
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            locationURI="menu:org.eclipse.ui.main.menu?after=additions">
+         <menu
+               label="ProgAdvisor"
+               id="org.costa.progadvisor.menus.mainMenu">
+            <command
+                  commandId="org.costa.progadvisor.commands.analyzeMethod"
+                  id="org.costa.progadvisor.menus.noStdCommand"
+                  label="Analyze with ProgAdvisor"
+                  icon="icons/costa_icon.png">
+            </command>
+         </menu>
+      </menuContribution>
+      <menuContribution
+            locationURI="toolbar:org.eclipse.ui.main.toolbar?after=additions">
+         <toolbar
+               id="org.costa.progadvisor.toolbars.mainToolbar">
+            <command
+                  commandId="org.costa.progadvisor.commands.analyzeMethod"
+                  icon="icons/costa_icon.png"
+                  id="org.costa.progadvisor.toolbars.noStdCommand"
+                  tooltip="Analyze with ProgAdvisor">
+           <!--<visibleWhen>
+					<test
+						property="activeWorkbenchWindow.activePerspective"
+						value="*">
+					</test>
+					<equals activeWorkbenchWindow.activePerspective="ABS"/>
+               	</visibleWhen>-->
+                  
+            </command>
+         </toolbar>
+      </menuContribution>
+   </extension>
+   <extension
+         point="org.eclipse.ui.preferencePages">
+      <page
+            class="org.costa.progadvisor.preferences.CostabsPreferences0"
+            id="org.costa.progadvisor.preferences.CostabsPreferences0"
+            name="ProgAdvisor"> 
+      </page>
+   </extension>
+   <extension
+         point="org.eclipse.core.runtime.preferences">
+      <page
+            class="org.costa.progadvisor.WorkbenchPreferencePage1"
+            id="org.costa.progadvisor.preferences.CostabsPreferences0"
+            name="ProgAdvisor preferences">
+      </page>
+      <initializer
+            class="org.costa.progadvisor.preferences.PreferenceInitializer">
+      </initializer>
+   </extension>
+   
+      <extension
+         point="org.eclipse.ui.workbench.texteditor.rulerColumns">
+      <column
+            class="org.costa.progadvisor.rulers.CostabsResultsRuler"
+            enabled="true"
+            global="true"
+            id="org.costa.progadvisor.plugin.ruler"
+            includeInMenu="true"
+            name="ProgAdvisor results">
+         <placement
+               gravity="1.0">
+         </placement>
+         <targetClass
+               class="org.eclipse.ui.texteditor.AbstractDecoratedTextEditor">
+         </targetClass>
+      </column>
+   </extension>
+   <!-- NOTE: All markers must extend this marker -->
+   
+   <extension
+         id="org.costa.progadvisor.marker"
+         name="ProgAdvisor Marker"
+         point="org.eclipse.core.resources.markers">
+         <super type="org.eclipse.core.resources.textmarker"/>
+   </extension>
+   <!-- Normal markers -->
+   <extension
+         id="org.costa.progadvisor.marker.info"
+         name="ProgAdvisor Info Marker"
+         point="org.eclipse.core.resources.markers">
+         <super type="org.costa.progadvisor.marker"/>
+   </extension>
+   <extension
+		id="org.costa.progadvisor.marker.warn"
+		name="ProgAdvisor Warning Marker"
+		point="org.eclipse.core.resources.markers">
+		<super 
+            type="org.costa.progadvisor.marker">
+      	</super>
+   </extension>
+   <extension
+         id="org.costa.progadvisor.marker.inter.info"
+         name="ProgAdvisor Inter Info Marker"
+         point="org.eclipse.core.resources.markers">
+         <super type="org.costa.progadvisor.marker"/>
+   </extension>
+   <extension
+		id="org.costa.progadvisor.marker.inter.warn"
+		name="Costabs Inter Warning Marker"
+		point="org.eclipse.core.resources.markers">
+		<super 
+            type="org.costa.progadvisor.marker">
+      	</super>
+   </extension>
+   <extension
+          point="org.eclipse.ui.ide.markerImageProviders">
+       <imageprovider
+             icon="icons/costabs_marker_warning.png"
+             id="org.costa.progadvisor.CostabsImageProviderWarn"
+             markertype="org.costa.progadvisor.marker.warn">
+       </imageprovider>
+       <imageprovider
+             icon="icons/costabs_marker_info.png"
+             id="org.costa.progadvisor.CostabsImageProvider"
+             markertype="org.costa.progadvisor.marker.info">
+       </imageprovider>
+       <imageprovider
+             icon="icons/costabs_marker_inter_info.png"
+             id="org.costa.progadvisor.CostabsImageProviderInter"
+             markertype="org.costa.progadvisor.marker.inter.info">
+       </imageprovider>
+       <imageprovider
+             icon="icons/costabs_marker_inter_warn.png"
+             id="org.costa.progadvisor.CostabsImageProviderInterWarn"
+             markertype="org.costa.progadvisor.marker.inter.warn">
+       </imageprovider>
+   </extension>
+   <!-- Highlight Markers -->
+	<extension
+         id="org.costa.progadvisor.marker.highlight"
+         name="ProgAdvisor Highlight"
+         point="org.eclipse.core.resources.markers">
+	      <super type="org.costa.progadvisor.marker"/>
+   </extension>
+	<extension
+         id="org.costa.progadvisor.marker.highlightwarn"
+         name="ProgAdvisor Highlight Warning"
+         point="org.eclipse.core.resources.markers">
+      <super
+            type="org.costa.progadvisor.marker">
+      </super>
+   </extension>
+	<extension
+         id="org.costa.progadvisor.marker.inter.highlight"
+         name="ProgAdvisor Highlight"
+         point="org.eclipse.core.resources.markers">
+	      <super type="org.costa.progadvisor.marker"/>
+   </extension>
+	<extension
+         id="org.costa.progadvisor.marker.inter.highlightwarn"
+         name="ProgAdvisor Highlight Warning"
+         point="org.eclipse.core.resources.markers">
+      <super
+            type="org.costa.progadvisor.marker">
+      </super>
+   </extension>
+   <extension
+         id="org.costa.progadvisor.marker.selected"
+         name="ProgAdvisor Selected"
+         point="org.eclipse.core.resources.markers">
+      <super
+            type="org.costa.progadvisor.marker">
+      </super>
+   </extension>
+   <extension
+         id="org.costa.progadvisor.plugin.annotationhighlight"
+         name="ProgAdvisor Highlight Annotation Types"
+         point="org.eclipse.ui.editors.annotationTypes">
+      <type
+            markerType="org.costa.progadvisor.marker.highlight"
+            name="org.costa.progadvisor.plugin.annotationhighlight"
+            super="org.eclipse.ui.workbench.texteditor.warning">
+      </type>
+      <type
+            markerType="org.costa.progadvisor.marker.highlightwarn"
+            name="org.costa.progadvisor.plugin.exceptionannotation"
+            super="org.eclipse.ui.workbench.texteditor.warning">
+      </type>
+      <type
+            markerType="org.costa.progadvisor.marker.inter.highlight"
+            name="org.costa.progadvisor.plugin.annotationhighlight.inter"
+            super="org.eclipse.ui.workbench.texteditor.warning">
+      </type>
+      <type
+            markerType="org.costa.progadvisor.marker.inter.highlightwarn"
+            name="org.costa.progadvisor.plugin.exceptionannotation.inter"
+            super="org.eclipse.ui.workbench.texteditor.warning">
+      </type>
+      <type
+            markerType="org.costa.progadvisor.marker.selected"
+            name="org.costa.progadvisor.plugin.annotation.selected"
+            super="org.eclipse.ui.workbench.texteditor.warning">
+      </type>
+   </extension>
+   <extension
+         id="org.costa.progadvisor.plugin.annotationSpecification"
+         name="ProgAdvisor Highlight Specification"
+         point="org.eclipse.ui.editors.markerAnnotationSpecification">
+      <specification
+            annotationType="org.costa.progadvisor.plugin.annotationhighlight"
+            colorPreferenceKey="org.costa.progadvisor.highlight.colorPref"
+            colorPreferenceValue="72,118,255"
+            highlightPreferenceKey="org.costa.progadvisor.highlight.high"
+            highlightPreferenceValue="true"
+            icon="icons/costabs_highlight_info.gif"
+            includeOnPreferencePage="true"
+            label="Costabs Highlight Info Marker"
+            overviewRulerPreferenceKey="org.costa.progadvisor.highlight.ovRuler"
+            overviewRulerPreferenceValue="true"
+            presentationLayer="0"
+            symbolicIcon="warning"
+            textPreferenceKey="org.costa.progadvisor.highlight.text"
+            textPreferenceValue="true"
+            textStylePreferenceKey="org.costa.progadvisor.highlight.textStyle"
+            textStylePreferenceValue="IBEAM">
+      </specification>
+      <specification
+            annotationType="org.costa.progadvisor.plugin.exceptionannotation"
+            colorPreferenceKey="org.costa.progadvisor.highlight.colorPrefwarn"
+            colorPreferenceValue="238,154,0"
+            highlightPreferenceKey="org.costa.progadvisor.highlight.highwarn"
+            highlightPreferenceValue="true"
+            icon="icons/costabs_highlight_warn.gif"
+            includeOnPreferencePage="true"
+            label="Costabs Highlight Warn Marker"
+            overviewRulerPreferenceKey="org.costa.progadvisor.highlight.ovRulerwarn"
+            overviewRulerPreferenceValue="true"
+            presentationLayer="0"
+            symbolicIcon="warning"
+            textPreferenceKey="org.costa.progadvisor.highlight.textwarn"
+            textPreferenceValue="true"
+            textStylePreferenceKey="org.costa.progadvisor.highlight.textStylewarn"
+            textStylePreferenceValue="IBEAM">
+      </specification>
+      <specification
+            annotationType="org.costa.progadvisor.plugin.annotationhighlight.inter"
+            colorPreferenceKey="org.costa.progadvisor.highlight.inter.colorPref"
+            colorPreferenceValue="135,206,235"
+            highlightPreferenceKey="org.costa.progadvisor.highlight.inter.high"
+            highlightPreferenceValue="true"
+            icon="icons/costabs_highlight_inter_info.png"
+            includeOnPreferencePage="true"
+            label="Costabs Highlight Info Marker"
+            overviewRulerPreferenceKey="org.costa.progadvisor.highlight.inter.ovRuler"
+            overviewRulerPreferenceValue="true"
+            presentationLayer="0"
+            symbolicIcon="warning"
+            textPreferenceKey="org.costa.progadvisor.highlight.inter.text"
+            textPreferenceValue="true"
+            textStylePreferenceKey="org.costa.progadvisor.highlight.inter.textStyle"
+            textStylePreferenceValue="IBEAM">
+      </specification>
+      <specification
+            annotationType="org.costa.progadvisor.plugin.exceptionannotation.inter"
+            colorPreferenceKey="org.costa.progadvisor.highlight.inter.colorPrefwarn"
+            colorPreferenceValue="255,178,102"
+            highlightPreferenceKey="org.costa.progadvisor.highlight.inter.highwarn"
+            highlightPreferenceValue="true"
+            icon="icons/costabs_highlight_inter_warn.png"
+            includeOnPreferencePage="true"
+            label="Costabs Highlight Warn Marker"
+            overviewRulerPreferenceKey="org.costa.progadvisor.highlight.inter.ovRulerwarn"
+            overviewRulerPreferenceValue="true"
+            presentationLayer="0"
+            symbolicIcon="warning"
+            textPreferenceKey="org.costa.progadvisor.highlight.inter.textwarn"
+            textPreferenceValue="true"
+            textStylePreferenceKey="org.costa.progadvisor.highlight.inter.textStylewarn"
+            textStylePreferenceValue="IBEAM">
+      </specification>
+      <specification
+            annotationType="org.costa.progadvisor.plugin.annotation.selected"
+            colorPreferenceKey="org.costa.progadvisor.highlight.inter.color.selected"
+            colorPreferenceValue="255,255,0"
+            highlightPreferenceKey="org.costa.progadvisor.highlight.selected.high"
+            highlightPreferenceValue="true"
+            icon="icons/costabs_rule_marker_selected.png"
+            includeOnPreferencePage="true"
+            label="Costabs Highlight Warn Marker"
+            overviewRulerPreferenceKey="org.costa.progadvisor.highlight.selected.ovRulerwarn"
+            overviewRulerPreferenceValue="true"
+            presentationLayer="0"
+            symbolicIcon="warning"
+            textPreferenceKey="org.costa.progadvisor.highlight.selected.textwarn"
+            textPreferenceValue="true"
+            textStylePreferenceKey="org.costa.progadvisor.highlight.selected.textStylewarn"
+            textStylePreferenceValue="IBEAM">
+      </specification>
+
+   </extension>
+ 	<!-- COSTABS VIEW -->
+ 	
+ 	<extension
+         point="org.eclipse.ui.perspectiveExtensions">
+      <perspectiveExtension
+            targetID="org.eclipse.debug.ui.JavaPerspective">
+         <view
+               closeable="true"
+               id="org.costa.progadvisor.view"
+               minimized="false"
+               moveable="true"
+               relationship="stack"
+               relative="org.eclipse.ui.views.TaskList"
+               showTitle="true"
+               standalone="true"
+               visible="false">
+         </view>
+      </perspectiveExtension>
+   </extension>
+   <extension
+         point="org.eclipse.ui.views">
+      <category
+            id="org.costa.progadvisor.CostabsCategory"
+            name="ProgAdvisor">
+      </category>
+      <view
+            category="org.costa.progadvisor.CostabsCategory"
+            class="org.costa.progadvisor.views.CostabsView"
+            icon="icons/costa_icon.png"
+            id="org.costa.progadvisor.view"
+            name="ProgAdvisor Markers Viewer">
+      </view>
+   </extension>
+    <extension
+         point="org.eclipse.ui.ide.markerSupport">
+      <markerContentGenerator
+            id="org.costa.progadvisor.plugin.CostabsMarkerContentGenerator"
+            name="CostabsMarkerContentGenerator" >
+				<markerTypeReference id="org.costa.progadvisor.marker.info"/>
+				<markerTypeReference id="org.costa.progadvisor.marker.warn"/>
+				<markerFieldReference visible="true" id="org.eclipse.ui.ide.severityAndDescriptionField"/>
+				<markerFieldReference visible="true" id="org.eclipse.ui.ide.resourceField"/>
+				<markerFieldReference visible="true" id="org.eclipse.ui.ide.locationField"/>
+      </markerContentGenerator>
+   </extension>
+ 	 
+ 	<extension
+         point="org.eclipse.ui.perspectiveExtensions">
+      <perspectiveExtension
+            targetID="org.eclipse.debug.ui.JavaPerspective">
+         <view
+               closeable="true"
+               id="org.costa.progadvisor.view.graph"
+               minimized="false"
+               moveable="true"
+               relationship="stack"
+               showTitle="true"
+               standalone="true"
+               visible="false">
+         </view>
+      </perspectiveExtension>
+   </extension>
+   <extension point="org.eclipse.ui.views"> 
+      <category 
+         id="org.costa.progadvisor.views.CostabsGraphView" 
+         name="ProgAdvisor Graph View"/> 
+      <view 
+         id="org.costa.progadvisor.view.graph" 
+         name="ProgAdvisor Graph Viewer" 
+         category="org.costa.progadvisor.CostabsCategory" 
+         class="org.costa.progadvisor.views.CostabsGraphView" 
+         icon="icons/costa_icon.png"/>
+   </extension> 
+   <!-- esto es cosecha propia html -->
+  <extension
+         point="org.eclipse.ui.perspectiveExtensions">
+      <perspectiveExtension
+            targetID="org.eclipse.debug.ui.JavaPerspective">
+         <view
+               closeable="true"
+               id="org.costa.progadvisor.view.html"
+               minimized="false"
+               moveable="true"
+               relationship="stack"
+               showTitle="true"
+               standalone="true"
+               visible="false">
+         </view>
+      </perspectiveExtension>
+   </extension>
+   <extension point="org.eclipse.ui.views"> 
+      <category 
+         id="org.costa.progadvisor.views.CostabsHtml2View" 
+         name="ProgAdvisor Html View"/> 
+      <view 
+         id="org.costa.progadvisor.view.html" 
+         name="ProgAdvisor Html Viewer" 
+         category="org.costa.progadvisor.CostabsCategory" 
+         class="org.costa.progadvisor.views.CostabsHtml2View" 
+         icon="icons/costa_icon.png"/>
+   </extension> 
+     <!-- esto es cosecha propia html -->
+  <extension
+         point="org.eclipse.ui.perspectiveExtensions">
+      <perspectiveExtension
+            targetID="org.eclipse.debug.ui.JavaPerspective">
+         <view
+               closeable="true"
+               id="org.costa.progadvisor.view.dot"
+               minimized="false"
+               moveable="true"
+               relationship="stack"
+               showTitle="true"
+               standalone="true"
+               visible="false">
+         </view>
+      </perspectiveExtension>
+   </extension>
+   <!--extension point="org.eclipse.ui.views"> 
+      <category 
+         id="costabs.views.CostabsDOTView" 
+         name="ProgAdvisor DOT View"/> 
+      <view 
+         id="costabs.view.dot" 
+         name="ProgAdvisor DOT Viewer" 
+         category="costabs.CostabsCategory" 
+         class="costabs.views.CostabsDOTView" 
+         icon="icons/costa_icon.png"/>
+   </extension--> 
+   <!--extension
+         point="org.eclipse.ui.views">
+      <category
+            id="costabs.CostabsCategory"
+            name="Costabs">
+      </category>
+      <view
+            category="costabs.CostabsCategory"
+            class="costabs.views.CostabsView"
+            icon="icons/palmtree16x16.png"
+            id="costabs.view.graph"
+            name="Costa Graph View">
+      </view>
+   </extension-->
+	
+</plugin>

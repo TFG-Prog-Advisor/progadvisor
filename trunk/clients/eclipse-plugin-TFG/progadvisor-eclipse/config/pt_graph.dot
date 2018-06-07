@@ -1,0 +1,10 @@
+digraph pt_info {
+       graph[layout=dot]
+       rankdir=TD
+       n1[label="[12,11]"]; n2[label="[13,11]"]; n3[label="[19,13]"]; n0[label="[11]"]
+       n0 -> n1[style=dotted]
+       n0 -> n2[style=dotted]
+       n2 -> n3[style=dotted]
+ 
+ 
+}

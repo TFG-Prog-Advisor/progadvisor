@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<title>Prueba tabla</title>
+<style>
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+th, td {
+    padding: 5px;
+}
+</style>
+<!-- <script language="JavaScript">
+function valorCelda(celda)  {
+ destino = document.getElementById("table");
+     destino.value = celda.innerHTML; 
+     alert(destino.value);
+}
+</script> -->
+</head>
+
+<body>
+
+<table id = "table" style="width:100%">
+  <tr>
+    <th>Firstname</th>
+    <th>Lastname</th>		
+    <th>Points</th>
+  </tr>
+  <tr>
+    <td onclick="valorCelda(this,'jjiill');">Jill</td>
+    <td>Smith</td>		
+    <td>50</td>
+  </tr>
+  <tr>
+    <td>Eve</td>
+    <td>Jackson</td>		
+    <td>94</td>
+  </tr>
+  <tr>
+    <td>John</td>
+    <td>Doe</td>		
+    <td>80</td>
+  </tr>
+</table>
+
+</body>
+</html>
